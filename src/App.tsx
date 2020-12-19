@@ -1,59 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import Counter from './components/Counter';
+import { TextField } from './components/TextField';
 
-function App() {
+const  App :React.FC=()=> {
   return (
-    <Router>
     <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/users">Users</Link>
-          </li>
-        </ul>
-      </nav>
+      <TextField handleChange={(e:React.ChangeEvent<HTMLInputElement>)=>{
+        console.log("value in another component",e.target.value);
+        
+       }} text="hellow" person={{firstName : 'mayur',lastName:'patel'}}/>
+       <Counter>
+         {({count,setCount})=>(
+           <div>
+             {count}
+             <button onClick={()=> setCount(count+1)}> + </button>
+             <button onClick={()=> setCount(count-1)}> - </button>
+           </div>
+         )
 
-      {/* A <Switch> looks through its children <Route>s and
-          renders the first one that matches the current URL. */}
-      <Switch>
-        <Route path="/about">
-          <About />
-        </Route>
-        <Route path="/users">
-          <Users />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
+         }
+       </Counter>
     </div>
-  </Router>
   );
 }
 
-function Home() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
 
 export default App;
